@@ -1,0 +1,364 @@
+Question link :- https://www.codechef.com/OCT17/problems/CHEFGP/
+Solution :-
+#include<bits/stdc++.h>
+using namespace std;
+ 
+int main(){
+  int t;
+  //cout<<"Enter t\n";
+  cin>>t;
+  while(t--){
+    string s;
+  //  cout<<"Enter s\n";
+    cin>>s;
+    int x,y;
+    //cout<<"Enter x and y\n";
+    cin>>x>>y;
+    int l=s.size();
+    int a[2]={0};
+    for(int i=0;i<l;i++){
+      if(s[i]=='a'){
+        a[0]++;
+      }
+      else{
+        a[1]++;
+      }
+    }
+    //cout<<"The number of a is "<<a[0]<<"\n";
+    //cout<<"The number of b is "<<a[1]<<"\n";
+    if(a[0]==0 || a[1]==0){           //case 1 when any one of a and b doesnot occur;
+      if(a[0]==0){
+        int count=0;
+        for(int i=0;i<l;i++){
+          if(count==y){
+            cout<<'*';
+            cout<<'b';
+            count=1;
+          }
+          else{
+          cout<<'b';
+          count++;}
+        }
+      }
+      else{
+        int count=0;
+        for(int i=0;i<l;i++){
+          if(count==x){
+            cout<<'*';
+            cout<<'a';
+            count=1;
+          }
+          else{
+          cout<<'a';
+          count++;}
+        }
+      }
+       cout<<"\n";
+    }
+    else{                       //case when none of them is zero;
+      int l1=min(a[0],a[1]);
+      int l2=max(a[0],a[1]);
+      int l3=l2/l1;
+      int x1=min(x,y);
+      int flag1=0;          //for x
+      int flag2=0;          //for y
+      if(x1==x){
+        flag1=1;
+      }
+      else{
+        flag2=1;
+      }
+      int flag3=0;        //for a 
+      int flag4=0;        //for b
+      if(l1==a[0]){
+        flag3=1;
+      }
+      else{
+        flag4=1;
+      }
+      int x2=max(x,y);
+        if(l3>=x2){                        //case for ratio to be greater than min of x and y
+         if(flag3==1){      //case if a is min and x is min
+          int count1=1;     //for checking a
+          int count2=0;     //for checking x
+          int count3=0;     //for printing *
+          for(int i=0;i<l;i++){
+            if(count1<=l1){
+              if(count2==y){
+                cout<<'a';
+                count2=0;
+                count1++;
+              }
+              else{
+              cout<<'b';
+              count2++;}
+            }
+            else{
+              if(count2==y){
+                cout<<'*';
+                cout<<'b';
+                count2=1;
+              }
+              else{
+              cout<<'b';
+              count2++;}
+            }
+          }
+         }
+         
+        else{
+            int count1=1;     //for checking b
+            int count2=0;     //for checking x
+            int count3=0;     //for printing *
+            for(int i=0;i<l;i++){
+              if(count1<=l1){
+                if(count2==x){
+                  cout<<'b';
+                  count2=0;
+                  count1++;
+                }
+                else{
+                cout<<'a';
+                count2++;}
+              }
+              else{
+                if(count2==x){
+                  cout<<'*';
+                  cout<<'a';
+                  count2=1;
+                }
+                else{
+                cout<<'a';
+                count2++;}
+              }
+          }
+        }
+      
+      }
+    
+    else if(l3<x1){
+      int t3 = l2%l1;     //ratio less than min of x and y
+      int s4 = x1-l3;     //difference between min of x and y and ratio  
+      int s5 = t3%s4;     //remaining elements
+      int s6 = t3/s4;     //loop will run till s6
+      int t6 = l3+s4;     //elements addition
+      //cout<<"when ratio is less than x1\n";
+      if(flag3==1){   //a is min and x is min
+          int count5 = 0;
+          int count6 = 0;
+          int count7 = 0;
+          for(int i=0;i<l;i++){
+            if(count6<s6){
+              if(count5==t6){
+                cout<<'a';
+                count6++;
+                count5=0;
+              }
+              else{
+              cout<<'b';
+              count5++;}
+            }
+            else if(count6==s6){
+              if(count5==l3+s5){
+                cout<<'a';
+                count6++;
+                count5=0;
+              }
+              else{
+                cout<<'b';
+                count5++;
+              }
+            }
+            else{
+              if(count5==l3){
+                cout<<'a';
+                count5=0;
+              }
+              else{
+                cout<<'b';
+                count5++;
+              }
+            }
+          }
+        }
+      else if(flag4==1){   //b is min and x is min
+          int count5 = 0;
+          int count6 = 0;
+          int count7 = 0;
+          for(int i=0;i<l;i++){
+            if(count6<s6){
+              if(count5==t6){
+                cout<<'b';
+                count6++;
+                count5=0;
+              }
+              else{
+              cout<<'a';
+              count5++;}
+            }
+            else if(count6==s6){
+              if(count5==l3+s5){
+                cout<<'b';
+                count6++;
+                count5=0;
+              }
+              else{
+                cout<<'a';
+                count5++;
+              }
+            }
+            else{
+              if(count5==l3){
+                cout<<'b';
+                count5=0;
+              }
+              else{
+                cout<<'a';
+                count5++;
+              }
+            }
+          }
+        }
+    }
+    else if(l3>=x1 && l3<x2){
+      int t3 = l2%l1;     //ratio less than min of x and y
+      int s4 = x2-l3;     //difference between max of x and y and ratio  
+      int s5 = t3%s4;     //remaining elements
+      int s6 = t3/s4;     //loop will run till s6
+      int t6 = l3+s4;     //elements addition
+     // cout<<"ABC\n";
+      if(flag3==1 && x2==y){   //a is min and x is min
+          int count5 = 0;
+          int count6 = 0;
+          int count7 = 0;
+          for(int i=0;i<l;i++){
+            if(count6<s6){
+              if(count5==t6){
+                cout<<'a';
+                count6++;
+                count5=0;
+              }
+              else{
+              cout<<'b';
+              count5++;}
+            }
+            else if(count6==s6){
+              if(count5==l3+s5){
+                cout<<'a';
+                count6++;
+                count5=0;
+              }
+              else{
+                cout<<'b';
+                count5++;
+              }
+            }
+            else{
+              if(count5==l3){
+                cout<<'a';
+                count5=0;
+              }
+              else{
+                cout<<'b';
+                count5++;
+              }
+            }
+          }
+        }
+      else if(flag4==1 && x2==x){   //b is min and x is min
+          int count5 = 0;
+          int count6 = 0;
+          int count7 = 0;
+          for(int i=0;i<l;i++){
+            if(count6<s6){
+              if(count5==t6){
+                cout<<'b';
+                count6++;
+                count5=0;
+              }
+              else{
+              cout<<'a';
+              count5++;}
+            }
+            else if(count6==s6){
+              if(count5==l3+s5){
+                cout<<'b';
+                count6++;
+                count5=0;
+              }
+              else{
+                cout<<'a';
+                count5++;
+              }
+            }
+            else{
+              if(count5==l3){
+                cout<<'b';
+                count5=0;
+              }
+              else{
+                cout<<'a';
+                count5++;
+              }
+            }
+          }
+        }
+        else if(flag3==1 && x2==x){
+          int count1=1;     //for checking a
+          int count2=0;     //for checking x
+          int count3=0;     //for printing *
+          for(int i=0;i<l;i++){
+            if(count1<=l1){
+              if(count2==y){
+                cout<<'a';
+                count2=0;
+                count1++;
+              }
+              else{
+              cout<<'b';
+              count2++;}
+            }
+            else{
+              if(count2==y){
+                cout<<'*';
+                cout<<'b';
+                count2=1;
+              }
+              else{
+              cout<<'b';
+              count2++;}
+            }
+          }
+        }
+        else if(flag4==1 && x2==y){
+           int count1=1;     //for checking b
+            int count2=0;     //for checking x
+            int count3=0;     //for printing *
+            for(int i=0;i<l;i++){
+              if(count1<=l1){
+                if(count2==x){
+                  cout<<'b';
+                  count2=0;
+                  count1++;
+                }
+                else{
+                cout<<'a';
+                count2++;}
+              }
+              else{
+                if(count2==x){
+                  cout<<'*';
+                  cout<<'a';
+                  count2=1;
+                }
+                else{
+                cout<<'a';
+                count2++;}
+              }
+          }
+        }
+    }
+    cout<<"\n";
+  }
+}
+}  
